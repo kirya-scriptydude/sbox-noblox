@@ -29,8 +29,12 @@ public class NobloxMenu : Window {
         var importButton = Layout.Add(new Label("IMPORT", this));
         importButton.SetStyles("background-color: rgb(0, 255, 0); font-size: 32px;");
         importButton.Alignment = Sandbox.TextFlag.Center;
-        importButton.Position = new Vector2(165, 400);
+        importButton.Position = new Vector2(155, 400);
         importButton.Size = new Vector2(200, 50);
-        
+
+        var filePathBox = Layout.Add(new TextEdit(this));
+        filePathBox.SetStyles("background-color: rgb(0,0,0); color: white;");
+        filePathBox.Position = new Vector2(100, 250);
+        filePathBox.Size = new Vector2(300, 25);
 	}
 }
