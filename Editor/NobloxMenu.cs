@@ -1,3 +1,4 @@
+using System.Linq;
 using Editor;
 
 [EditorApp( "Noblox", "nature_people", " Import .rbxl's " )]
@@ -44,7 +45,9 @@ public class NobloxMenu : Window {
         fileBrowserButton.Size = new Vector2(300, 35);
 
         // functionality
+        
         fileBrowserButton.MouseClick += () => {
+
             string path = EditorUtility.OpenFileDialog("Select .rbxl file", ".rbxl", "");
 
             if (path == "")
@@ -59,6 +62,14 @@ public class NobloxMenu : Window {
             }
 
             filePathBox.PlainText = path;
+        };
+
+        importButton.MouseClick += () => {
+
+            if (filePathBox.PlainText == "") 
+                return;
+            
+            RbxlToSbox.ImportFile(filePathBox.PlainText);
         };
 
 	}
