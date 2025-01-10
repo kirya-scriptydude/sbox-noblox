@@ -34,7 +34,32 @@ public class NobloxMenu : Window {
 
         var filePathBox = Layout.Add(new TextEdit(this));
         filePathBox.SetStyles("background-color: rgb(0,0,0); color: white;");
-        filePathBox.Position = new Vector2(100, 250);
-        filePathBox.Size = new Vector2(300, 25);
+        filePathBox.Position = new Vector2(100, 240);
+        filePathBox.Size = new Vector2(300, 35);
+
+        var fileBrowserButton = Layout.Add(new Label("Select file", this));
+        fileBrowserButton.Alignment = Sandbox.TextFlag.Center;
+        fileBrowserButton.SetStyles("background-color: rgb(68, 68, 68); color: white; font-size: 20px");
+        fileBrowserButton.Position = new Vector2(100, 280);
+        fileBrowserButton.Size = new Vector2(300, 35);
+
+        // functionality
+        fileBrowserButton.MouseClick += () => {
+            string path = EditorUtility.OpenFileDialog("Select .rbxl file", ".rbxl", "");
+
+            if (path == "")
+                return;
+            var info = new FileInfo(path);
+
+            if (!info.Name.EndsWith(".decompressed.rbxl")) {
+                EditorUtility.DisplayDialog(
+                    "Normal .rbxl file warning!",
+                    "You can't import usual .rbxl because it contains compressed data.\nUse RbxlRepacker and import the output file!"
+                );
+            }
+
+            filePathBox.PlainText = path;
+        };
+
 	}
 }
