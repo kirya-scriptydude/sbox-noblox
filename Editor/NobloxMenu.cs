@@ -69,6 +69,11 @@ public class NobloxMenu : Window {
             if (filePathBox.PlainText == "") 
                 return;
             
+            if (!filePathBox.PlainText.EndsWith(".decompressed.rbxl")) {
+                Log.Warning("Couldn't import .rbxl file: Normal .rbxl are not supported. Check the instructions at https://github.com/kirya-scriptydude/sbox-noblox.");
+                return;
+            }
+            
             Log.Info("Starting .rbxl import.");
             RbxlToSbox.ImportFile(filePathBox.PlainText, SceneEditorSession.Active.Scene);
         };
