@@ -69,7 +69,8 @@ public class NobloxMenu : Window {
             if (filePathBox.PlainText == "") 
                 return;
             
-            RbxlToSbox.ImportFile(filePathBox.PlainText);
+            Log.Info("Starting .rbxl import.");
+            RbxlToSbox.ImportFile(filePathBox.PlainText, SceneEditorSession.Active.Scene);
         };
 
 	}
