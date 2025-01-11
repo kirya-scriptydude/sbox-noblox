@@ -2,11 +2,19 @@ using Editor;
 using Sandbox;
 using RbxlReader;
 using RbxlReader.Instances;
+using System.Linq;
 
 public static class RbxlToSbox {
 
     public static void ImportFile(string filePath, Scene scene) {
         PlaceBinary place = new(filePath);
+
+        foreach (GameObject obj in scene.Children) {
+            if (obj.Tags.Has("rbxl")) {
+                Log.Info("Found old .rbxl import object. Rewritting...");
+                obj.Destroy();
+            }
+        }
 
         GameObject root = scene.CreateObject();
         root.Name = "Root";
