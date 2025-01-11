@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Runtime.CompilerServices;
 using RbxlReader.Chunks;
 using RbxlReader.Instances;
 
@@ -30,12 +31,11 @@ public static class DataTypeHelper {
 
         // Color
         {PropertyType.Color3, typeof(Color3)},
-        {PropertyType.Color3uint8, typeof(Color3uint8)},
+        {(PropertyType)26, typeof(Color3)},
         {PropertyType.BrickColor, typeof(BrickColor)},
 
         // Sequence
         {PropertyType.NumberSequence, typeof(NumberSequence)},
-        {PropertyType.ColorSequence, typeof(ColorSequence)},
         {PropertyType.NumberRange, typeof(NumberRange)},
 
         //  random stuff lol
@@ -64,7 +64,9 @@ public static class DataTypeHelper {
         PropertyType.Vector3,
         PropertyType.CFrame,
         
-        PropertyType.Color3
+        PropertyType.Color3,
+        PropertyType.BrickColor,
+        (PropertyType)26
     };
 
     /// <summary>
@@ -73,6 +75,7 @@ public static class DataTypeHelper {
     /// </summary>
     public static void ParsePropertiesInChunk(RbxlBinaryReader reader, PropertyType type, int instCount, InstanceProperty[] props) {
         Type? typeClass = Types[type];
+
 
         if (typeClass == null)
             throw new ArgumentNullException($"Type {type} isn't implemented.");
@@ -213,6 +216,32 @@ public static class DataTypeHelper {
                 
                 break;
             }
+            
+            case PropertyType.BrickColor: {
+                int[] colorIds = readInts();
+                readProps(props, instCount, i => {
+                    BrickColor color = BrickColor.FromNumber(i);
+                    return color;
+                });
+
+                break;
+            }
+
+            case PropertyType.Color3uint8: {
+                byte[] arrR = reader.ReadBytes(instCount),
+                    arrG = reader.ReadBytes(instCount),
+                    arrB = reader.ReadBytes(instCount);
+
+                readProps(props, instCount, i => {
+                    float r = arrR[i],
+                        g = arrG[i],
+                        b = arrB[i];
+                    
+                    return new Color3(r, g, b);
+            });
+                
+            break;
+            }
 
             default: {
                 break;
@@ -230,5 +259,15 @@ public static class DataTypeHelper {
             
             prop.Value = read(i);
         }
+    }
+
+    public static bool ContainsUsedTypes(byte num) {
+        foreach (PropertyType type in UsedTypes) {
+            if ((PropertyType)num == type) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

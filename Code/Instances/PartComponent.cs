@@ -11,6 +11,8 @@ public sealed class PartComponent : InstanceComponent {
     public Vector3 StudRotation {get; set;}
     [Property, ReadOnly, Group("Part")]
     public Vector3 StudSize {get; set;}
+    [Property, ReadOnly, Group("Part")]
+    public Color Color {get; set;}
 
     public override void ApplyData() {
         var renderer = GameObject.GetOrAddComponent<ModelRenderer>();
@@ -19,6 +21,7 @@ public sealed class PartComponent : InstanceComponent {
         LocalPosition = ConvertStudVector(StudPosition);
         WorldScale = StudSize;
         WorldRotation = new Angles(StudRotation);
+        renderer.Tint = Color;
     }
 
     

@@ -48,11 +48,13 @@ public static class RbxlToSbox {
                 CFrame cf = (CFrame)instance.GetProperty("CFrame").Value;
                 var size = (RbxlReader.DataTypes.Vector3)instance.GetProperty("size").Value;
                 var rot = cf.ToEulerAngles();
+                //var color = (Color3)instance.GetProperty("Color").Value;
 
                 part.StudPosition = new(cf.Position.X, cf.Position.Z, cf.Position.Y);
                 part.StudSize = new(size.X, size.Z, size.Y);
                 part.StudRotation = new(MathX.RadianToDegree(rot.Pitch), MathX.RadianToDegree(rot.Yaw), MathX.RadianToDegree(rot.Roll));
-                
+                //part.Color = new(color.R, color.G, color.B);
+
                 break;
             }
 
