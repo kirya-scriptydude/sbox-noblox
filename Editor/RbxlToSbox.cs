@@ -51,8 +51,8 @@ public static class RbxlToSbox {
 
                 part.StudPosition = new(cf.Position.X, cf.Position.Z, cf.Position.Y);
                 part.StudSize = new(size.X, size.Z, size.Y);
-                part.StudRotation = new(rot.Pitch, rot.Yaw, rot.Roll);
-                //rotation is broken for the time being
+                part.StudRotation = new(MathX.RadianToDegree(rot.Pitch), MathX.RadianToDegree(rot.Yaw), MathX.RadianToDegree(rot.Roll));
+                
                 break;
             }
 
