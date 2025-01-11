@@ -197,6 +197,22 @@ public static class DataTypeHelper {
                 break;
             }
 
+            case PropertyType.Color3: {
+                float[] arrR = readFloats(),
+                        arrG = readFloats(),
+                        arrB = readFloats();
+
+                readProps(props, instCount, i => {
+                    float r = arrR[i],
+                        g = arrG[i],
+                        b = arrB[i];
+                    
+                    return new Color3(r, g, b);
+                });
+                
+                break;
+            }
+
             default: {
                 break;
             }
