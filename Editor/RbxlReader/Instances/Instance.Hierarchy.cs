@@ -46,4 +46,6 @@ public partial class Instance {
     public Instance? FindFirstChildOfClass(string className) {
         return children.FirstOrDefault(x => x.ClassName == className);
     }
+
+    public Instance[] GetChildren() => children.ToArray();
 }
