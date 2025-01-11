@@ -8,6 +8,7 @@ namespace RbxlReader.Instances;
 public partial class Instance {
     public PlaceBinary? Rbxl {get; set;}
 
+    public int Id {get; protected set;}
     public string ClassName {get; protected set;}
     public string Name {get {
         return property.ContainsKey("Name") ? (string)property["Name"].Value : ClassName;
@@ -15,14 +16,16 @@ public partial class Instance {
     
     private Dictionary<string, InstanceProperty> property;
 
-    public Instance(string className, Dictionary<string, InstanceProperty> props) {
+    public Instance(string className, Dictionary<string, InstanceProperty> props, int id = 0) {
         ClassName = className;
         property = props;
+        Id = id;
     }
 
-    public Instance(string className) {
+    public Instance(string className, int id = 0) {
         ClassName = className;
         property = new();
+        Id = id;
     }
 
     public InstanceProperty? GetProperty(string name) {

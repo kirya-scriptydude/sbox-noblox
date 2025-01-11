@@ -48,7 +48,7 @@ public class INST : IChunkInfo {
         }
 
         foreach (int id in InstanceIds) {
-            Instance instance = new(ClassName);
+            Instance instance = new(ClassName, id);
             LinkedInstances.Add(id, instance);
         }
     }

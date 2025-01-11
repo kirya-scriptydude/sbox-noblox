@@ -20,8 +20,6 @@ public static class RbxlToSbox {
         root.Name = "Root";
         root.Tags.Add("rbxl");
         recursiveInstanceHandler(place.Workspace, scene, root);
-
-        Log.Info("Handling properties...");
     }
 
     private static void recursiveInstanceHandler(Instance parent, Scene scene, GameObject previousObj) {
@@ -30,10 +28,18 @@ public static class RbxlToSbox {
 
         foreach(Instance instance in instances) {
             var gameObj = scene.CreateObject();
-            gameObj.Name = instance.Name;
             gameObj.Parent = previousObj;
+            handleProperties(instance, gameObj);
+
             recursiveInstanceHandler(instance, scene, gameObj);
         }
+    }
+
+    private static void handleProperties(Instance instance, GameObject gameObject) {
+        var comp = gameObject.AddComponent<InstanceComponent>(true);
+        comp.InstanceId = instance.Id;
+        gameObject.Name = instance.Name;
+        comp.ClassName = instance.ClassName;
     }
 
 }
