@@ -31,7 +31,7 @@ public static class DataTypeHelper {
 
         // Color
         {PropertyType.Color3, typeof(Color3)},
-        {(PropertyType)26, typeof(Color3)},
+        {PropertyType.Color3uint8, typeof(Color3)},
         {PropertyType.BrickColor, typeof(BrickColor)},
 
         // Sequence
@@ -45,7 +45,9 @@ public static class DataTypeHelper {
         {PropertyType.SharedString, typeof(SharedString)},
 
         {PropertyType.Axes, typeof(Axes)},
-        {PropertyType.Faces, typeof(Faces)}
+        {PropertyType.Faces, typeof(Faces)},
+
+        {(PropertyType)31, typeof(byte)}
 
     };
 
@@ -74,11 +76,11 @@ public static class DataTypeHelper {
     /// Writes into props array.
     /// </summary>
     public static void ParsePropertiesInChunk(RbxlBinaryReader reader, PropertyType type, int instCount, InstanceProperty[] props) {
-        Type? typeClass = Types[type];
-
+        var typeClass = Types[type];
 
         if (typeClass == null)
             throw new ArgumentNullException($"Type {type} isn't implemented.");
+        
 
         //  shorthand functions
         var readInts = new Func<int[]>(() => reader.ReadInterleaved(instCount, reader.RotateInt32));

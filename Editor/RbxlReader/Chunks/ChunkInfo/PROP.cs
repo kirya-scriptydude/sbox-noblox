@@ -31,8 +31,7 @@ public class PROP : IChunkInfo {
         PropName = reader.ReadString();
         typeId = reader.ReadByte();
 
-        if (!DataTypeHelper.ContainsUsedTypes(typeId))
-            return; //do not decode
+        if (!DataTypeHelper.UsedTypes.Contains(Type)) return; //do not decode
         
         Class = Raw.Rbxl.IdToINST[ClassId];
         var props = new InstanceProperty[Class.InstanceCount];
