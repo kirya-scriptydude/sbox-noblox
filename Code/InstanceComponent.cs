@@ -11,5 +11,15 @@ public class InstanceComponent : Component {
     [Property, ReadOnly]
     public string ClassName {get; set;}
 
+    /// <summary>
+    /// Applies rbxl data to sbox component. Override me
+    /// </summary>
+    public virtual void ApplyData() {}
 
+    public static float ConvertStudFloat(float studs) {
+        return studs * 11;
+    }
+    public static Vector3 ConvertStudVector(Vector3 vector) {
+        return new(ConvertStudFloat(vector.x), ConvertStudFloat(vector.y), ConvertStudFloat(vector.z));
+    }
 }

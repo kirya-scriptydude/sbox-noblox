@@ -3,6 +3,7 @@ using Sandbox;
 using RbxlReader;
 using RbxlReader.Instances;
 using System.Linq;
+using RbxlReader.DataTypes;
 
 public static class RbxlToSbox {
 
@@ -36,10 +37,35 @@ public static class RbxlToSbox {
     }
 
     private static void handleProperties(Instance instance, GameObject gameObject) {
-        var comp = gameObject.AddComponent<InstanceComponent>(true);
+        InstanceComponent comp;
+        switch (instance.ClassName) {
+
+            case "Part": {
+                comp = gameObject.AddComponent<PartComponent>(true);
+
+                var part = (PartComponent)comp;
+
+                CFrame cf = (CFrame)instance.GetProperty("CFrame").Value;
+                var size = (RbxlReader.DataTypes.Vector3)instance.GetProperty("size").Value;
+                var rot = cf.ToEulerAngles();
+
+                part.StudPosition = new(cf.Position.X, cf.Position.Z, cf.Position.Y);
+                part.StudSize = new(size.X, size.Z, size.Y);
+                //part.StudRotation = new(MathX.RadianToDegree(rot.Yaw), MathX.RadianToDegree(rot.Roll), MathX.RadianToDegree(rot.Pitch));
+                //rotation is broken for the time being
+                break;
+            }
+
+            default: {
+                comp = gameObject.AddComponent<InstanceComponent>();
+                break;
+            }
+
+        }
         comp.InstanceId = instance.Id;
         gameObject.Name = instance.Name;
         comp.ClassName = instance.ClassName;
-    }
 
+        comp.ApplyData();
+    }
 }
