@@ -146,10 +146,11 @@ public static class DataTypeHelper {
 
                 for (int i = 0; i < instCount; i++) {
                     byte rawOrientId = reader.ReadByte();
+                    
 
                     if (rawOrientId > 0) {
-
-                        var cf = CFrame.FromOrientId(rawOrientId);
+                        int orientId = (rawOrientId - 1) % 36;
+                        var cf = CFrame.FromOrientId(orientId);
                         matrices[i] = cf.GetComponents();
 
                     } else {

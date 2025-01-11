@@ -53,8 +53,7 @@ public class CFrame {
         };
     }
 
-    public static CFrame FromOrientId(byte rawOrientId) {
-        int orientId = rawOrientId;
+    public static CFrame FromOrientId(int orientId) {
         var xColumn = (NormalId)(orientId / 6);
         var yColumn = (NormalId)(orientId % 6);
 
