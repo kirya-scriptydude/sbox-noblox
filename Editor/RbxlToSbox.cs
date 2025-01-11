@@ -51,7 +51,7 @@ public static class RbxlToSbox {
                 var color = (Color3)instance.GetProperty("Color3uint8").Value;
                 var transparency = (float)instance.GetProperty("Transparency").Value;
 
-                part.StudPosition = new(cf.Position.X, cf.Position.Z, cf.Position.Y);
+                part.StudPosition = new(-cf.Position.X, cf.Position.Z, cf.Position.Y);
                 part.StudSize = new(size.X, size.Z, size.Y);
                 part.StudRotation = new(MathX.RadianToDegree(rot.Pitch), MathX.RadianToDegree(rot.Yaw), MathX.RadianToDegree(rot.Roll));
                 part.Color = new(color.R, color.G, color.B, 1 - transparency);
