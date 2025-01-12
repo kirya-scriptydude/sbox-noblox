@@ -32,10 +32,6 @@ public class PROP : IChunkInfo {
         typeId = reader.ReadByte();
         Class = Raw.Rbxl.IdToINST[ClassId];
 
-        if (Class.ClassName == "Part" && PropName == "shape") {
-            int x = 0;
-        }
-
         if (!DataTypeHelper.UsedTypes.Contains(Type)) return; //do not decode
         
         
