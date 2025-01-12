@@ -18,7 +18,7 @@
 						angles = [ 0.0, 0.0, 0.0 ]
 						max_u = 1.0
 						max_v = 1.0
-						dimensions = [ 10.0, 10.0, 10.0 ]
+						dimensions = [ 11.0, 11.0, 11.0 ]
 						segments_x = 1
 						segments_y = 1
 						segments_z = 1
