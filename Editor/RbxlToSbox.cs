@@ -60,6 +60,16 @@ public static class RbxlToSbox {
                 break;
             }
 
+            case "PointLight": {
+                comp = gameObject.AddComponent<RbxlPointLightComponent>();
+
+                var light = (RbxlPointLightComponent)comp;
+                light.Strength = (float)instance.GetProperty("Brightness").Value;
+                light.Range = (float)instance.GetProperty("Range").Value;
+                
+                break;
+            }
+
             default: {
                 comp = gameObject.AddComponent<InstanceComponent>();
                 break;
