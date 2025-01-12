@@ -54,7 +54,7 @@ public static class RbxlToSbox {
                 part.StudPosition = new(-cf.Position.X, cf.Position.Z, cf.Position.Y);
                 part.StudSize = new(size.X, size.Z, size.Y);
                 part.StudRotation = new(MathX.RadianToDegree(rot.Pitch), MathX.RadianToDegree(rot.Yaw), MathX.RadianToDegree(rot.Roll));
-                part.Color = new(color.R, color.G, color.B, 1 - transparency);
+                part.BrickColor = Color.FromBytes((int)color.R, (int)color.G, (int)color.B, (int)((0.8 - transparency) * 255));
 
                 break;
             }
