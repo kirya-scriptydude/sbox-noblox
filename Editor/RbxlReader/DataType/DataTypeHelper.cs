@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Runtime.CompilerServices;
 using RbxlReader.Chunks;
 using RbxlReader.Instances;
 
@@ -17,6 +16,7 @@ public static class DataTypeHelper {
         {PropertyType.Double, typeof(double)},
         {PropertyType.String, typeof(string)},
         {PropertyType.Bool, typeof(bool)},
+        {PropertyType.Enum, typeof(uint)},
 
         // Positional
         {PropertyType.Vector2, typeof(Vector2)},
@@ -62,13 +62,14 @@ public static class DataTypeHelper {
         PropertyType.Int64,
         PropertyType.Float,
         PropertyType.Double,
+        (PropertyType)18, //enum
 
         PropertyType.Vector3,
         PropertyType.CFrame,
         
         PropertyType.Color3,
         PropertyType.BrickColor,
-        (PropertyType)26
+        (PropertyType)26 //color3uint8
     };
 
     /// <summary>
@@ -114,6 +115,12 @@ public static class DataTypeHelper {
 
             case PropertyType.Int64: {
                 long[] ints = reader.ReadInterleaved(instCount, reader.RotateInt64);
+                readProps(props, instCount, i => ints[i]);
+                break;
+            }
+
+            case PropertyType.Enum: {
+                uint[] ints = reader.ReadInterleaved(instCount, BitConverter.ToUInt32);
                 readProps(props, instCount, i => ints[i]);
                 break;
             }

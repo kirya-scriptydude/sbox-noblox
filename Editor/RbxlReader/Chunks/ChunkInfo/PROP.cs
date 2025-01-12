@@ -30,10 +30,15 @@ public class PROP : IChunkInfo {
         ClassId = reader.ReadInt32();
         PropName = reader.ReadString();
         typeId = reader.ReadByte();
+        Class = Raw.Rbxl.IdToINST[ClassId];
+
+        if (Class.ClassName == "Part" && PropName == "shape") {
+            int x = 0;
+        }
 
         if (!DataTypeHelper.UsedTypes.Contains(Type)) return; //do not decode
         
-        Class = Raw.Rbxl.IdToINST[ClassId];
+        
         var props = new InstanceProperty[Class.InstanceCount];
 
         for (int i = 0; i < Class.InstanceCount; i++) {
