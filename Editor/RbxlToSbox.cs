@@ -39,7 +39,8 @@ public static class RbxlToSbox {
     private static void handleProperties(Instance instance, GameObject gameObject) {
         InstanceComponent comp;
         switch (instance.ClassName) {
-
+            
+            case "SpawnLocation":
             case "Part": {
                 comp = gameObject.AddComponent<PartComponent>(true);
 
