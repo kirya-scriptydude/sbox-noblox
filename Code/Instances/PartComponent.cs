@@ -14,6 +14,9 @@ public sealed class PartComponent : InstanceComponent {
     [Property, ReadOnly, Group("Part")]
     public Color BrickColor {get; set;}
 
+    [Property, ReadOnly, Group("Part")]
+    public bool CanCollide {get; set;} = true;
+
     public override void ApplyData() {
         var renderer = GameObject.GetOrAddComponent<ModelRenderer>();
         renderer.Model = Stud;
@@ -22,6 +25,11 @@ public sealed class PartComponent : InstanceComponent {
         WorldScale = StudSize;
         WorldRotation = new Angles(StudRotation);
         renderer.Tint = BrickColor;
+
+        if (CanCollide) {
+            var collider = GameObject.GetOrAddComponent<ModelCollider>();
+            collider.Model = Stud;
+        }
     }
 
     
