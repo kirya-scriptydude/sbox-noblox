@@ -1,6 +1,7 @@
 using System.Linq;
 using RbxlReader.Chunks;
 using RbxlReader.Instances;
+using Sandbox;
 
 namespace RbxlReader.DataTypes;
 
@@ -47,7 +48,8 @@ public static class DataTypeHelper {
         {PropertyType.Axes, typeof(Axes)},
         {PropertyType.Faces, typeof(Faces)},
 
-        {(PropertyType)31, typeof(byte)}
+        {(PropertyType)31, typeof(byte)},
+        {PropertyType.Ref, typeof(int)}
 
     };
 
@@ -63,6 +65,7 @@ public static class DataTypeHelper {
         PropertyType.Float,
         PropertyType.Double,
         (PropertyType)18, //enum
+        PropertyType.Ref,
 
         PropertyType.Vector3,
         PropertyType.CFrame,
@@ -248,8 +251,14 @@ public static class DataTypeHelper {
                     
                     return new Color3(r, g, b);
             });
-                
+    
             break;
+            }
+
+            case PropertyType.Ref: {
+                var ints = reader.ReadInstanceIds(instCount);
+                readProps(props, instCount, i => ints[i]);
+                break;
             }
 
             default: {
