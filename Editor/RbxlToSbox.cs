@@ -33,7 +33,7 @@ public static class RbxlToSbox {
             comp.PostApplyData();
         }
 
-        Log.Info($"Done! Imported {rootComp.InstanceCount} GameObjects to scene.");
+        Log.Info($"Done! Imported {rootComp.ImportedObjectCount} GameObjects to scene.");
     }
 
     private static void recursiveInstanceHandler(Instance parent, Scene scene, GameObject previousObj, RbxlRoot root) {
@@ -47,6 +47,7 @@ public static class RbxlToSbox {
             
             root.IdToInstance[comp.InstanceId] = comp;
 
+            root.ImportedObjectCount++;
             recursiveInstanceHandler(instance, scene, gameObj, root);
         }
     }

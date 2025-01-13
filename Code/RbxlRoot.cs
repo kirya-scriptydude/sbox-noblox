@@ -8,4 +8,7 @@ public class RbxlRoot : Component {
     public int InstanceCount {get; set;}
     [Property, ReadOnly]
     public int ClassCount {get; set;}
+
+    [Property, ReadOnly]
+    public int ImportedObjectCount {get; set;}
 }
