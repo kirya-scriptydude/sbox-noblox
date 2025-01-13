@@ -1,7 +1,7 @@
 {
   "Title": "Noblox",
   "Type": "library",
-  "Org": "local",
+  "Org": "kirillv",
   "Ident": "noblox",
   "Schema": 1,
   "IncludeSourceFiles": false,
