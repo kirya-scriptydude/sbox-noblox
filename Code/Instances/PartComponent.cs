@@ -32,6 +32,8 @@ public sealed class PartComponent : InstanceComponent {
 
     [Property, ReadOnly, Group("Part")]
     public bool CanCollide {get; set;} = true;
+    [Property, ReadOnly, Group("Part")]
+    public bool Anchored {get; set;} = true;
 
     [Property, ReadOnly, Group("Part")]
     public PartShape Shape {get; set;} = PartShape.Block;
@@ -48,8 +50,13 @@ public sealed class PartComponent : InstanceComponent {
         renderer.Tint = BrickColor;
 
         if (CanCollide) {
-            var collider = GameObject.GetOrAddComponent<ModelCollider>();
-            collider.Model = mdl;
+            var collider = GameObject.AddComponent<BoxCollider>();
+            collider.Scale = Vector3.One * 11;
+            if (Anchored) collider.Static = true;
+        }
+
+        if (!Anchored) {
+            var rigidbody = GameObject.AddComponent<Rigidbody>();
         }
     }
 

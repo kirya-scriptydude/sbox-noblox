@@ -58,6 +58,9 @@ public static class RbxlToSbox {
                 part.BrickColor = Color.FromBytes((int)color.R, (int)color.G, (int)color.B, (int)((1 - transparency) * 255));
                 part.Shape = (PartShape)(uint)instance.GetProperty("shape").Value;
 
+                part.CanCollide = (bool)instance.GetProperty("CanCollide").Value;
+                part.Anchored = (bool)instance.GetProperty("Anchored").Value;
+
                 break;
             }
 
