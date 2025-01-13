@@ -50,8 +50,8 @@ public sealed class PartComponent : InstanceComponent {
         renderer.Tint = BrickColor;
 
         if (CanCollide) {
-            var collider = GameObject.AddComponent<BoxCollider>();
-            collider.Scale = Vector3.One * 11;
+            var collider = GameObject.AddComponent<ModelCollider>();
+            collider.Model = mdl;
             if (Anchored) collider.Static = true;
         }
 
