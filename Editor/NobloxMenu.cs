@@ -4,7 +4,7 @@ using Editor;
 [EditorApp( "Noblox", "nature_people", " Import .rbxl's " )]
 public class NobloxMenu : Window {
 	public NobloxMenu() {
-		WindowTitle = "NOBLOX v1.0";
+		WindowTitle = "NOBLOX";
 		Size = new Vector2(500, 500);
         
         HasMaximizeButton = false;
