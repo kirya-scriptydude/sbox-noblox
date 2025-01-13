@@ -1,11 +1,11 @@
-using Editor;
 using Sandbox;
 using RbxlReader;
 using RbxlReader.Instances;
-using System.Linq;
 using RbxlReader.DataTypes;
 
 public static class RbxlToSbox {
+    
+    public static readonly string DEFAULT_ROOT_NAME = "NOBLOX - Root";
 
     public static void ImportFile(string filePath, Scene scene) {
         PlaceBinary place = new(filePath);
@@ -18,25 +18,40 @@ public static class RbxlToSbox {
         }
 
         GameObject root = scene.CreateObject();
-        root.Name = "Root";
+        root.Name = DEFAULT_ROOT_NAME;
         root.Tags.Add("rbxl");
-        recursiveInstanceHandler(place.Workspace, scene, root);
+
+        var rootComp = root.AddComponent<RbxlRoot>();
+        rootComp.InstanceCount = place.NumberInstances;
+        rootComp.ClassCount = place.NumberClasses;
+        rootComp.IdToInstance = new InstanceComponent[rootComp.InstanceCount];
+
+        recursiveInstanceHandler(place.Workspace, scene, root, rootComp);
+
+        Log.Info("Post init setup");
+        foreach (InstanceComponent comp in scene.GetAllComponents<InstanceComponent>()) {
+            comp.PostApplyData();
+        }
+
+        Log.Info($"Done! Imported {rootComp.InstanceCount} GameObjects to scene.");
     }
 
-    private static void recursiveInstanceHandler(Instance parent, Scene scene, GameObject previousObj) {
+    private static void recursiveInstanceHandler(Instance parent, Scene scene, GameObject previousObj, RbxlRoot root) {
         Instance[] instances = parent.GetChildren();
         if (instances.Length == 0) return;
 
         foreach(Instance instance in instances) {
             var gameObj = scene.CreateObject();
             gameObj.Parent = previousObj;
-            handleProperties(instance, gameObj);
+            var comp = handleProperties(instance, gameObj, root);
+            
+            root.IdToInstance[comp.InstanceId] = comp;
 
-            recursiveInstanceHandler(instance, scene, gameObj);
+            recursiveInstanceHandler(instance, scene, gameObj, root);
         }
     }
 
-    private static void handleProperties(Instance instance, GameObject gameObject) {
+    private static InstanceComponent handleProperties(Instance instance, GameObject gameObject, RbxlRoot root) {
         InstanceComponent comp;
         switch (instance.ClassName) {
             
@@ -83,7 +98,9 @@ public static class RbxlToSbox {
         comp.InstanceId = instance.Id;
         gameObject.Name = instance.Name;
         comp.ClassName = instance.ClassName;
+        comp.Root = root;
 
         comp.ApplyData();
+        return comp;
     }
 }
