@@ -50,8 +50,9 @@ public class NobloxMenu : Window {
 
             string path = EditorUtility.OpenFileDialog("Select .rbxl file", ".rbxl", "");
 
-            if (path == "")
+            if (string.IsNullOrEmpty(path))
                 return;
+            
             var info = new FileInfo(path);
 
             if (!info.Name.EndsWith(".decompressed.rbxl")) {
