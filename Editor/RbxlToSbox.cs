@@ -33,7 +33,13 @@ public static class RbxlToSbox {
             comp.PostApplyData();
         }
 
-        Log.Info($"Done! Imported {rootComp.ImportedObjectCount} GameObjects to scene.");
+        Log.Info($"Imported {rootComp.ImportedObjectCount} GameObjects to scene.");
+        Log.Info("Cleaning instances up...");
+
+        int cleanCount = rootComp.Cleanup();
+        Log.Info($"{cleanCount} cleaned instances.");
+
+        Log.Info($"Importing completed! {rootComp.ImportedObjectCount - cleanCount} total.");
     }
 
     private static void recursiveInstanceHandler(Instance parent, Scene scene, GameObject previousObj, RbxlRoot root) {
@@ -103,6 +109,16 @@ public static class RbxlToSbox {
                 //comp = gameObject.AddComponent<RopeComponent>();
               //  break;
            // }
+
+           case "Weld":
+           case "Snap": {
+                comp = gameObject.AddComponent<WeldComponent>();
+
+                var constr = (ConstraintComponent)comp;
+                constr.Part0 = (int)instance.GetProperty("Part0").Value;
+                constr.Part1 = (int)instance.GetProperty("Part1").Value;
+                break;
+           }
 
             default: {
                 comp = gameObject.AddComponent<InstanceComponent>();

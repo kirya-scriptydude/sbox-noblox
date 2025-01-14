@@ -12,7 +12,10 @@ public class ConstraintComponent : InstanceComponent {
     public virtual void ConstraintSetup(GameObject part0, GameObject part1) {}
 
     public override void PostApplyData() {
-        
+        //dont do anything when meeting null referent - it will be cleaned after post init.
+        if (Part0 == -1 || Part1 == -1) {
+            return;
+        } 
 
         var part0 = Root.IdToInstance[Part0];
         var part1 = Root.IdToInstance[Part1];
@@ -23,5 +26,6 @@ public class ConstraintComponent : InstanceComponent {
         }
     
         ConstraintSetup(part0.GameObject, part1.GameObject);
+        Root.AddToCleanup(GameObject);
     }
 }
