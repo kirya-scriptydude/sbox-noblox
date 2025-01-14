@@ -90,12 +90,27 @@ public static class RbxlToSbox {
                 break;
             }
 
+            case "WeldConstraint": {
+                comp = gameObject.AddComponent<WeldComponent>();
+
+                var constr = (ConstraintComponent)comp;
+                constr.Part0 = (int)instance.GetProperty("Part0Internal").Value;
+                constr.Part1 = (int)instance.GetProperty("Part1Internal").Value;
+                break;
+            }
+
+            //case "RopeConstraint": {
+                //comp = gameObject.AddComponent<RopeComponent>();
+              //  break;
+           // }
+
             default: {
                 comp = gameObject.AddComponent<InstanceComponent>();
                 break;
             }
 
         }
+
         comp.InstanceId = instance.Id;
         gameObject.Name = instance.Name;
         comp.ClassName = instance.ClassName;
