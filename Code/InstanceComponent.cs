@@ -3,7 +3,7 @@ using  Sandbox;
 /// <summary>
 /// Component describing rbxl's Instance
 /// </summary>
-[Title("Noblox - Instance"), Description("Component describing rbxl's Instance."), Group("Noblox")]
+[Title("Noblox - Instance"), Group("Noblox")]
 public class InstanceComponent : Component {
     [Property, ReadOnly]
     public int InstanceId {get; set;}
